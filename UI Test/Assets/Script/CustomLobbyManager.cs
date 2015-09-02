@@ -46,7 +46,7 @@ public class CustomLobbyManager : NetworkLobbyManager
 	
 	public override void OnLobbyServerSceneChanged (string sceneName)
 	{
-		Debug.Log ("OnLobbyServerSceneChanged");
+		Debug.Log ("OnLobbyServerSceneChanged : " + sceneName);
 		this.offlineScene = "PhysicTest";
 	}
 
