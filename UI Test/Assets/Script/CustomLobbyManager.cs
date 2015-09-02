@@ -2,7 +2,8 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class CustomLobbyManager : NetworkLobbyManager {
+public class CustomLobbyManager : NetworkLobbyManager
+{
 	
 	public delegate void EventHandler ();
 	
@@ -17,17 +18,36 @@ public class CustomLobbyManager : NetworkLobbyManager {
 
 	void Start ()
 	{
-		StartHost();
+		StartHost ();
 		
-		if(!NetworkServer.active)
-			StartClient();
+		if (!NetworkServer.active)
+			StartClient ();
 
 		EventLobby += OnHit;
 	}
 
+	void OnGUI ()
+	{
+		if (!isNetworkActive && Application.loadedLevelName.Equals("PhysicTest") && GUI.Button (new Rect (400, 10, 100, 30), "Exit")) {
+			Application.LoadLevel ("NetworkTest");
+		}
+	}
+
 	void OnHit ()
 	{
-		Debug.Log("Hit");
+		Debug.Log ("Hit");
+	}
+	
+	public override void OnLobbyClientSceneChanged (NetworkConnection conn)
+	{
+		Debug.Log ("OnLobbyClientSceneChanged");
+		this.offlineScene = "PhysicTest";
+	}
+	
+	public override void OnLobbyServerSceneChanged (string sceneName)
+	{
+		Debug.Log ("OnLobbyServerSceneChanged");
+		this.offlineScene = "PhysicTest";
 	}
 
 }
