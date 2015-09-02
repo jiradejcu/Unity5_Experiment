@@ -14,4 +14,13 @@ public class Player : NetworkBehaviour
 	{
 		EventFire ();
 	}
+
+	void Start ()
+	{
+		if (!isLocalPlayer && netId.Value != 0) {
+			gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ().enabled = false;
+			gameObject.GetComponentInChildren<AudioListener> ().enabled = false;
+			gameObject.GetComponentInChildren<Camera> ().enabled = false;
+		}
+	}
 }
