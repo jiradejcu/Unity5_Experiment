@@ -4,50 +4,34 @@ using System.Collections;
 
 public class CustomLobbyManager : NetworkLobbyManager
 {
-	
-	public delegate void EventHandler ();
-	
-	[SyncEvent]
-	public event EventHandler
-		EventLobby;
-	
-	public void SendEvent ()
-	{
-		EventLobby ();
-	}
-
 	void Start ()
 	{
+		networkSceneName = "NetworkTest";
+		StartButton.lobby = this;
+
 		StartHost ();
 		
 		if (!NetworkServer.active)
 			StartClient ();
-
-		EventLobby += OnHit;
 	}
 
 	void OnGUI ()
 	{
-		if (!isNetworkActive && Application.loadedLevelName.Equals("PhysicTest") && GUI.Button (new Rect (400, 10, 100, 30), "Exit")) {
-			Application.LoadLevel ("NetworkTest");
+		if (!isNetworkActive && Application.loadedLevelName.Equals ("PhysicTest") && GUI.Button (new Rect (400, 10, 100, 30), "Exit")) {
+			Application.LoadLevel ("Main");
 		}
-	}
 
-	void OnHit ()
+		GUI.Box(new Rect (400, 100, 200, 300), "Offline : " + offlineScene + "\nOnline : " + onlineScene + "\nLobby : " + lobbyScene + "\nPlay : " + playScene + "\nNetwork : " + networkSceneName);
+	}
+	
+	void ClearOfflineScene ()
 	{
-		Debug.Log ("Hit");
+		lobbyScene = "";
+		offlineScene = "";
 	}
 	
 	public override void OnLobbyClientSceneChanged (NetworkConnection conn)
 	{
-		Debug.Log ("OnLobbyClientSceneChanged");
-		this.offlineScene = "PhysicTest";
+		ClearOfflineScene ();
 	}
-	
-	public override void OnLobbyServerSceneChanged (string sceneName)
-	{
-		Debug.Log ("OnLobbyServerSceneChanged : " + sceneName);
-		this.offlineScene = "PhysicTest";
-	}
-
 }
