@@ -6,7 +6,7 @@ public class CustomLobbyManager : NetworkLobbyManager
 {
 	void Start ()
 	{
-		networkSceneName = "NetworkTest";
+		networkSceneName = "";
 		StartButton.lobby = this;
 
 		StartHost ();
@@ -26,7 +26,6 @@ public class CustomLobbyManager : NetworkLobbyManager
 	
 	void ClearOfflineScene ()
 	{
-		lobbyScene = "";
 		offlineScene = "";
 	}
 	
